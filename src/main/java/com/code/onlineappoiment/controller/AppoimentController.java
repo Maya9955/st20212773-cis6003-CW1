@@ -121,14 +121,14 @@ public class AppoimentController extends HttpServlet {
 	private void deleteAppoiment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		clearMessage();
-		int idappoiment = Integer.parseInt(request.getParameter("productCode"));
+		int idappoiment = Integer.parseInt(request.getParameter("idappoiment"));
 		
 		try {
 			if(getAppoimentService().deleteAppoiment(idappoiment)) {
-				message = "The product has been successfully deleted. Product Code: " + idappoiment;
+				message = "The apponitment has been successfully deleted. Appointment ID: " + idappoiment;
 			}
 			else {
-				message = "Failed to delet the product! Product Code: " + idappoiment;
+				message = "Failed to delet the apponitment! Appointment ID: " + idappoiment;
 			}
 		} 
 		catch (ClassNotFoundException | SQLException e) {
@@ -142,7 +142,7 @@ public class AppoimentController extends HttpServlet {
 		HttpSession session = request.getSession();
 		session.setAttribute("message", message);
 		
-		response.sendRedirect("getproduct?actiontype=all");
+		response.sendRedirect("getappoiment?actiontype=all");
 	}
 	
 	private void fetchSingleAppoiment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -187,7 +187,7 @@ public class AppoimentController extends HttpServlet {
 		request.setAttribute("appoimentList", appoimentList);
 		request.setAttribute("feebackMessage", message);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("view-all-and-delete-specific.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("view-appoiment.jsp");
 		rd.forward(request, response);
 		
 	}

@@ -138,9 +138,6 @@ public class AppoimentManagerImpl implements AppoimentManager {
 		connection.close();		
 		return appoiment;
 	}
-	
-	
-
 
 	@Override
 	public List<Appoiment> fetchAllAppoiment() throws SQLException, ClassNotFoundException {
