@@ -49,28 +49,40 @@
         </nav>
     </header>
     
-    <script>
-        function submitForm() {
-            // Assuming the form fields are valid, you can replace this with your validation logic
-            // ...
-            
-            // Simulating registration success (you can replace this with your actual server-side logic)
-            var bookingSuccessful = true; // Set this to true if registration is successful
-            
-            var resultMessage = bookingSuccessful ? "Successfully Appointment Booked!" : "Booking failed. Please try again.";
-            var resultColor = bookingSuccessful ? "text-success" : "text-danger";
-            
-            var resultModal = new bootstrap.Modal(document.getElementById("registrationModal"));
-            var resultModalBody = document.getElementById("registrationModalBody");
-            resultModalBody.textContent = resultMessage;
-            resultModalBody.className = resultColor;
-            
-            resultModal.show();
-            
-            return false; // Prevent the form from submitting and redirecting
-        }
-    </script>
-    
+ <script>
+    function submitForm() {
+        // Assuming the form fields are valid, you can replace this with your validation logic
+        // ...
+        
+        // Simulating registration success (you can replace this with your actual server-side logic)
+        var bookingSuccessful = true; // Set this to true if registration is successful
+        
+        var resultMessage = bookingSuccessful
+            ? "Thank you for booking! Your appointment has been successfully booked. One of our counselors will confirm your booking by email. You can get your booking details from there."
+            : "Booking failed. Please try again.";
+        var resultColor = bookingSuccessful ? "text-success" : "text-danger";
+        
+        var resultModal = new bootstrap.Modal(document.getElementById("registrationModal"));
+        var resultModalBody = document.getElementById("registrationModalBody");
+        resultModalBody.textContent = resultMessage;
+        resultModalBody.className = resultColor;
+        
+        resultModal.show();
+        
+        // Attach the refreshPage function to the modal's "Okay" button click event
+        var okayButton = document.querySelector("#registrationModal .btn-secondary");
+        okayButton.addEventListener("click", refreshPage);
+        
+        return false; // Prevent the form from submitting and redirecting
+    }
+
+    // Function to refresh the page
+    function refreshPage() {
+        location.reload();
+    }
+</script>
+
+
      <div class="modal fade" id="registrationModal" tabindex="-1" aria-labelledby="registrationModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
