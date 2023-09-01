@@ -26,5 +26,11 @@ public interface UserManager {
 
 	public User fetchUserByUsername(String fullname);
 
+	public User getUserById(Integer iduser) throws SQLException, ClassNotFoundException;
+
+	public User viewProfileDetails(String fullname, String password, String userType) throws ClassNotFoundException, SQLException;
+	
+	
+
 	
 }

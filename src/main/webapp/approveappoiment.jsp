@@ -27,7 +27,7 @@
                         <li class="nav-item"><a class="nav-link" href="#freelancers">Careers</a></li>
                         <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
                         <li class="nav-item"><a class="nav-link" href="login.jsp">Login</a></li>
-                        <li class="nav-item"><a class="nav-link active" href="getappoiment?actiontype=all">View Appointment</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="getappoiment?actiontype=all">Manage Appointment</a></li>
                     </ul>
                 </div>
             </div>
@@ -36,7 +36,7 @@
     
      <script>
     function submitForm() {
-      
+        // Assuming the form fields are valid, you can replace this with your validation logic        
         // Simulating registration success 
         var deleteSuccessful = true; // Set this to true if registration is successful
         
@@ -81,18 +81,6 @@
 </div>
 
 		<div class="container">
-		<!-- 	<ul class="nav nav-tabs">
-			  <li class="nav-item">
-			    <a class="nav-link" aria-current="page" href="add-product.jsp">Add Product</a>
-			  </li>
-			  <li class="nav-item">
-			    <a class="nav-link" href="search-and-update.jsp">Search & Update the Product</a>
-			  </li>
-			  <li class="nav-item">
-			    <a class="nav-link active" href="#">View All & Delete Specific</a>
-			  </li>
-			</ul>			
-			<br/> -->
 			<h2>Manage Appoitments</h2>
 			<p style='color:magenta'>${message}</p>			
 			<br/>		
@@ -117,11 +105,11 @@
 							<td>${appoiment.date}</td>
 							<td>${appoiment.status}</td>
 							<td>
-								<form action="appoimentmanager" method="post">								
+								<%-- <form action="appoimentmanager" method="post">								
 									<input type="hidden" name="idappoiment" value="${appoiment.idappoiment}">
 									<input type="hidden" name="actiontype" value="delete">
 									<button type="submit" class="btn btn-danger">Delete the Appointment</button>
-								</form>							
+								</form>	 --%>												
 							</td>
 						</tr>
 					</tag:forEach>

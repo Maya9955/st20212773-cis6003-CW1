@@ -28,7 +28,6 @@
 			<h2>Search & update the appoiment</h2>
 			<p style='color:magenta'>${feebackMessage}</p>
 			<br/>
-			
 			<form action="getappoiment">			
 				<label for="idappoiment">Enter Appoiment ID:</label>
 				<input class="form-control" type="number" id="idappoiment" name="idappoiment" placeholder="Type the appoiment id"/>
@@ -37,6 +36,7 @@
 				<button type="submit" class="btn btn-info">Search</button>			
 			</form>
 			<hr/>
+			
 			<form action="appoimentmanager" method="post">			
 				<label for="idappoimentUpdate">Appoiment ID:</label>
 				<input class="form-control" type="number" id="idappoimentUpdate" name="idappoiment" readonly="readonly" value="${appoiment.idappoiment}"/>

@@ -190,4 +190,41 @@ public User checkUserLogin(String fullname, String password, String userType)thr
 		connection.close();		
 		return user;
 }
-	}
+
+
+
+@Override
+public User viewProfileDetails(String fullname, String password, String userType) throws ClassNotFoundException, SQLException {
+	 Connection connection = getConnection();
+	    String query = "SELECT * FROM user WHERE fullname=? AND password=? AND usertype=?";
+	    
+
+			PreparedStatement ps = connection.prepareStatement(query);
+			ps.setString(1, fullname);
+			ps.setString(2, password);
+	        ps.setString(3, userType);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			User user = new User();
+			
+			while(rs.next()) {
+				user.setiduser(rs.getInt("iduser"));
+				user.setfullname(rs.getString("fullname"));
+				user.setemail(rs.getString("email"));
+				user.setpassword(rs.getString("password"));
+				user.setusertype(rs.getString("usertype"));
+			}
+			
+			ps.close();
+			connection.close();		
+			return user;
+}
+
+@Override
+public User getUserById(Integer iduser) throws SQLException, ClassNotFoundException {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+}

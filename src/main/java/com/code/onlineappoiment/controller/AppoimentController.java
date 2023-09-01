@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.code.onlineappoiment.model.Appoiment;
+import com.code.onlineappoiment.model.User;
 import com.code.onlineappoiment.service.AppoimentService;
 import com.mysql.cj.Session;
 
@@ -187,9 +188,25 @@ public class AppoimentController extends HttpServlet {
 		request.setAttribute("appoimentList", appoimentList);
 		request.setAttribute("feebackMessage", message);
 		
+		String userType = request.getParameter("userType");
+		
+		User user = new User();
+		
+//		UserController userc = new UserController();
+//		String ut = userc.currentUserType;
+		System.out.println("u type: " + user.getusertype());
+		
+//	    String jspPage;
+//	    if ("approveappoiment".equals("approveappoiment.jsp")) {
+//	        jspPage = "approveappoiment.jsp";
+//	    } else{
+//	        jspPage = "view-appoiment.jsp";
+//	    }
+
+		
 		RequestDispatcher rd = request.getRequestDispatcher("view-appoiment.jsp");
 		rd.forward(request, response);
-		
+
 	}
 	
 	private void clearMessage() {

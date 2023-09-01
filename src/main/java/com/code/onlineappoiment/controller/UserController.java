@@ -20,8 +20,10 @@ import com.mysql.cj.Session;
 public class UserController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
+	public String currentUserType = "";
 	
 	String message = "";
+	User loggedUser = null;
 	
 	private UserService getUserService() {
 		return UserService.getUserService();
@@ -38,8 +40,8 @@ public class UserController extends HttpServlet {
 		else if  (useractionType.equals("login")) {
 			checkUserLogin(request, response);
 		}
-//		if else {
-//			fetchAllUser(request, response);
+//		else {
+//			fetchLoggedInUserDetails(request, response);
 //		}
 		
 	}
@@ -120,7 +122,7 @@ public class UserController extends HttpServlet {
 		}
 		
 		request.setAttribute("feebackMessage", message);
-		RequestDispatcher rd = request.getRequestDispatcher("search-and-update.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("myprofile.jsp");
 		rd.forward(request, response);
 		
 	}
@@ -167,7 +169,7 @@ public class UserController extends HttpServlet {
 			message = e.getMessage();
 		}
 		request.setAttribute("feebackMessage", message);
-		RequestDispatcher rd = request.getRequestDispatcher("search-and-update.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("myprofile.jsp");
 		rd.forward(request, response);
 	}
 	
@@ -210,17 +212,22 @@ public class UserController extends HttpServlet {
 	            System.out.println(fullname);
 	            System.out.println(password);
 	            System.out.println(userType);
+	            
+	            this.loggedUser.setusertype(userType);
+	            this.currentUserType =  userType;
+	            
+	            
 	            try {
 	                User user = getUserService().checkUserLogin(fullname, password, userType);
 	                if (user.getiduser() > 0) {
 	                    if ("admin".equals(userType)) {
 	                        // Redirect admin to home.jsp
-	                        response.sendRedirect("home.jsp");
+	                        response.sendRedirect("view-appoiment.jsp");
 	                    } else if ("jobSeeker".equals(userType)) {
 	                        // Redirect job seeker to register.jsp
 	                        response.sendRedirect("register.jsp");
-	                    } else {
-	                        // Handle other user types here if needed
+	                    } else if ("counselor".equals(userType)){
+	                    	response.sendRedirect("approveappoiment.jsp");
 	                    }
 	                } else {
 //	                    String message = "Login failed. Please try again.";
@@ -234,7 +241,31 @@ public class UserController extends HttpServlet {
 	                RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
 	                rd.forward(request, response);
 	            }
-	        } 
-	    }
+	 }
+	 public void viewProfileDetails(HttpServletRequest request, HttpServletResponse response)
+		        throws ServletException, IOException, ClassNotFoundException, SQLException {
+		  String useractiontype = request.getParameter("useractionType");
+
+	        if (useractiontype.equals("login")) {
+	            String fullname = request.getParameter("fullname");
+	            String password = request.getParameter("password");
+	            String userType = request.getParameter("userType");
+	            System.out.println(fullname);
+	            System.out.println(password);
+	            System.out.println(userType);
+	            User user = getUserService().viewProfileDetails(fullname, password, userType);
+				if (user.getiduser() > 0) {
+					   RequestDispatcher rd = request.getRequestDispatcher("myprofile.jsp");
+				        rd.forward(request, response);
+				} else {
+//	                    String message = "Login failed. Please try again.";
+//	                    request.setAttribute("feebackMessage", message);
+				    RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+				    rd.forward(request, response);
+				}
+	        }
+	 }
+}
+
 
 

@@ -52,5 +52,15 @@ public class UserService {
 		return getUsertManager().checkUserLogin(fullname, password, userType);
 		
 	}
+
+	public User getUserById(Integer iduser) throws ClassNotFoundException, SQLException {
+		return getUsertManager().getUserById(iduser);
+	}
+
+	public User viewProfileDetails(String fullname, String password, String userType) throws ClassNotFoundException, SQLException {
+		return getUsertManager().viewProfileDetails(fullname, password, userType);
+	}
+	
+	
 	
 }

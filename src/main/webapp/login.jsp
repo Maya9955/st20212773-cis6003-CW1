@@ -78,11 +78,13 @@
         
         function redirectToUserTypePage() {
             var userType = document.getElementById("userType").value;
+            sessionStorage.setItem('userType', userType);
             if (userType === "admin") {
-                window.location.href = "home.jsp";
+                window.location.href = "view-appoiment.jsp";
             } else if (userType === "jobSeeker") {
                 window.location.href = "add-appoiment.jsp";
-            } else {
+            } else if (userType === "Counselor"{
+            	window.location.href = "approveappoiment.jsp";
                 // Handle other user types or scenarios here
             }
         }
