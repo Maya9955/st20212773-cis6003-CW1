@@ -222,6 +222,12 @@ public class UserController extends HttpServlet {
 	            try {
 	                User user = getUserService().checkUserLogin(fullname, password, userType);
 	                if (user.getiduser() > 0) {
+	                	request.setAttribute("user", user);
+	                	HttpSession session=request.getSession();
+	                			session.setAttribute("userid", user.getiduser());
+	                			session.setAttribute("userfullname", user.getfullname());
+	                			session.setAttribute("userpassword", user.getpassword());
+	                			session.setAttribute("useremail", user.getemail());
 	                    if ("admin".equals(userType)) {
 	                        // Redirect admin to home.jsp
 	                        response.sendRedirect("view-appoiment.jsp");
