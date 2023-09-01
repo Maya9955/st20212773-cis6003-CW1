@@ -192,20 +192,25 @@ public class AppoimentController extends HttpServlet {
 		
 		User user = new User();
 		
-//		UserController userc = new UserController();
-//		String ut = userc.currentUserType;
-		System.out.println("u type: " + user.getusertype());
-		
-//	    String jspPage;
-//	    if ("approveappoiment".equals("approveappoiment.jsp")) {
-//	        jspPage = "approveappoiment.jsp";
-//	    } else{
-//	        jspPage = "view-appoiment.jsp";
-//	    }
+		// Retrieve userType from the session
+	    String usertype = (String) request.getSession().getAttribute("usertype");
 
-		
-		RequestDispatcher rd = request.getRequestDispatcher("view-appoiment.jsp");
-		rd.forward(request, response);
+	    // Now, you have the userType available to use in your logic
+	    System.out.println("User type: " + usertype);
+	    
+	    // Determine the JSP page based on userType
+	    String jspPage;
+	    if ("counselor".equals(usertype)) {
+	        jspPage = "approveappoiment.jsp";
+	    } else if ("admin".equals(usertype)) {
+	        jspPage = "view-appoiment.jsp";
+	    } else {
+	        // Handle other user types or set a default JSP page
+	        jspPage = "default.jsp";
+	    }
+
+	    RequestDispatcher rd = request.getRequestDispatcher(jspPage);
+	    rd.forward(request, response);
 
 	}
 	

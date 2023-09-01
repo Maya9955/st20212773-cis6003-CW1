@@ -213,9 +213,11 @@ public class UserController extends HttpServlet {
 	            System.out.println(password);
 	            System.out.println(userType);
 	            
-	            this.loggedUser.setusertype(userType);
-	            this.currentUserType =  userType;
-	            
+	         // Assuming you have the user type value from somewhere.
+	            String usertype = "admin"; // Replace this with the actual user type
+
+	            // Store the userType in the session
+	            request.getSession().setAttribute("usertype", userType);
 	            
 	            try {
 	                User user = getUserService().checkUserLogin(fullname, password, userType);
