@@ -2,6 +2,8 @@
     pageEncoding="ISO-8859-1" isELIgnored="false"%>
     
 <%@ taglib prefix="tag" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -11,6 +13,7 @@
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Latest compiled JavaScript -->
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
 		
 		   <style>
         /* CSS for the circular logo */
@@ -46,6 +49,7 @@
                         </li>
                         <li class="nav-item"><a class="nav-link active" href="getappoiment?actiontype=all">View Appointment</a></li>
                         <li class="nav-item"><a class="nav-link active" href="view-users.jsp">View Users</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="manage-users.jsp">Manage Users</a></li>
                     </ul>
                 </div>
                 <form action="home.jsp" method="post" class="ml-auto">
@@ -59,8 +63,6 @@
             </div>
         </nav>
     </header>
-
-
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -76,9 +78,12 @@
     </div>
 </div>
 
-		<div class="container">
-			<h2> Appointment History</h2>		
-			<br/>		
+ <!-- Display the counts as a graph -->
+        <div class="text-center">
+        <h2>Appointment Status Report- Counselor wise</h2>
+            <canvas id="userCountsChart" width="700" height="100"></canvas>
+        </div>
+			<h2> Appointment History</h2>
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -122,5 +127,60 @@
     }
     window.onload = showAlertWithMessage;
    </script>
+   <!-- ... (your existing HTML code) ... -->
+<!-- Add a canvas element to display the chart -->
+<canvas id="userCountsChart"></canvas>
+
+<script>
+    // Get the canvas element and context
+    var canvas = document.getElementById("userCountsChart");
+    var ctx = canvas.getContext("2d");
+
+    // Extract data from the JSTL forEach loops
+    var userApprovedCounts = [];
+    var userDeclinedCounts = [];
+
+    <c:forEach var="entry" items="${userApprovedCounts}">
+        userApprovedCounts.push({
+            label: "User ID " + ${entry.key} + " Approved",
+            backgroundColor: "blue", // Color for approved bars
+            data: [${entry.value}],
+        });
+    </c:forEach>
+
+    <c:forEach var="entry" items="${userDeclinedCounts}">
+        userDeclinedCounts.push({
+            label: "User ID " + ${entry.key} + " Declined",
+            backgroundColor: "red", // Color for declined bars
+            data: [${entry.value}],
+        });
+    </c:forEach>
+
+    // Define chart data
+    var data = {
+        labels: [" Appointment Status"],
+        datasets: [...userApprovedCounts, ...userDeclinedCounts],
+    };
+
+    // Define chart options (you can customize this as needed)
+    var options = {
+        scales: {
+            y: {
+                beginAtZero: true,
+            },
+        },
+    };
+
+    // Create the chart
+    var userCountsChart = new Chart(ctx, {
+        type: "bar",
+        data: data,
+        options: options,
+    });
+</script>
+ 
+</body>
+</html>
+   
 	</body>
 </html>

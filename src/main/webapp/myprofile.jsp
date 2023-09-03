@@ -39,7 +39,9 @@
     </style>
 </head>
 <body>
-<header>
+<%-- <p>${sessionScope.usertype}</p> --%>
+<body>
+    <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
             <a class="navbar-brand" href="#">Job Counseling</a>
@@ -47,15 +49,29 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a class="nav-link" href="home.jsp">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="bookappointment.jsp">Book Appointment</a></li>
-                    <li class="nav-item active"><a class="nav-link" href="#">My Profile</a></li>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <!-- Check if the user is a job seeker -->
+                        <% if ("jobSeeker".equals(session.getAttribute("usertype"))) { %>
+                            <li class="nav-item"><a class="nav-link" href="add-appointment.jsp">Book Appointment</a></li>
+                        <% } else if ("counselor".equals(session.getAttribute("usertype"))) { %>
+                            <li class="nav-item"><a class="nav-link" href="approveappoiment.jsp">Manage Appointment</a></li>
+                        <% } %>
+                    </li>
                 </ul>
             </div>
+            <form action="home.jsp" method="post" class="ml-auto">
+                <button type="submit" class="btn btn-outline-secondary rounded-pill">Logout</button>
+            </form>
+            <form action="myprofile.jsp" class="ml-auto">
+                <button type="submit" class="btn btn-link rounded-circle" title="My Profile Details">
+                    <img src="image/profileicon.jpg" alt="Profile Image" class="rounded-circle" width="40" height="40">
+                </button>
+            </form>
         </div>
     </nav>
 </header>
+    
 
 <div class="container mt-5">
     <div class="row">

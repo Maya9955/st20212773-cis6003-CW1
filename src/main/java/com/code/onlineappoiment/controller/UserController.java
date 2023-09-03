@@ -178,16 +178,39 @@ public class UserController extends HttpServlet {
 		clearMessage();
 		
 		List<User> userList = new ArrayList<User>();
+		 int jobSeekerCount = 0;
+		 int counselorCount = 0;
+		 
 		try {
 			userList = getUserService().fetchAllUser();
 			
-			if(!(userList.size() > 0)) {
-				message = "No record found!";
+			 for (User user : userList) {
+		            if ("jobSeeker".equals(user.getusertype())) {
+		                jobSeekerCount++;
+		            } else if ("Counselor".equals(user.getusertype())) {
+		                counselorCount++;
+		            }
+		        }
+
+		        if (userList.isEmpty()) {
+		            message = "No records found!";
+		        }
+		}
+		
+		
+			/*	message = "No record found!";
 			}
-		} 
+		} */
 		catch (ClassNotFoundException | SQLException e) {
 			message = e.getMessage();
 		}
+		
+		 // Set the counts as request attributes
+	    request.setAttribute("jobSeekerCount", jobSeekerCount);
+	    request.setAttribute("counselorCount", counselorCount);
+	    
+	    System.out.println("jobSeeker Count: " + jobSeekerCount);
+	    System.out.println("counselor Count: " + counselorCount);
 		
 		request.setAttribute("userList", userList);
 		request.setAttribute("feebackMessage", message);

@@ -11,6 +11,9 @@
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Latest compiled JavaScript -->
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+		
+		
 		
 	 <style>
         /* CSS for the circular logo */
@@ -60,12 +63,32 @@
             </div>
         </nav>
     </header>
+    
+       <div class="container">
+        <h2>User Count Report</h2>
+
+        <!-- Display the counts as a graph -->
+        <div class="text-center">
+            <canvas id="userCountsChart" width="600" height="100"></canvas>
+        </div>
 
 
-		<div class="container">
+<%-- 		<div class="container">
 			<h2> User Details</h2>
-<%-- 			<p style='color:magenta'>${message}</p>	 --%>		
-			<br/>		
+			<p style='color:magenta'>${message}</p>		
+                <p>Job Seeker Count: ${jobSeekerCount}</p>
+                <p>Counselor Count: ${counselorCount}</p>
+			<br/>	 --%>	
+<%-- 			 <div class="row">
+            <div class="col-md-6">
+                <h3>Job Seeker Count</h3>
+                <p>${jobSeekerCount}</p>
+            </div>
+            <div class="col-md-6">
+                <h3>Counselor Count</h3>
+                <p>${counselorCount}</p>
+            </div>
+        </div> --%>
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -96,5 +119,36 @@
 				</tbody>
 			</table>	
 		</div>
+		<script>
+    // Get the canvas element and context
+    var canvas = document.getElementById("userCountsChart");
+    var ctx = canvas.getContext("2d");
+
+    // Define chart data
+    var data = {
+        labels: ["Job Seekers", "Counselors"],
+        datasets: [{
+            label: "User Counts",
+            backgroundColor: ["blue", "green"], // Colors for bars
+            data: [${jobSeekerCount}, ${counselorCount}],
+        }],
+    };
+
+    // Define chart options (you can customize this as needed)
+    var options = {
+        scales: {
+            y: {
+                beginAtZero: true,
+            },
+        },
+    };
+
+    // Create the chart
+    var userCountsChart = new Chart(ctx, {
+        type: "bar",
+        data: data,
+        options: options,
+    });
+</script>
 	</body>
 </html>

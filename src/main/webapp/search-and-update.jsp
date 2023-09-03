@@ -40,19 +40,25 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#freelancers">Careers</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-                        <li class="nav-item"><a class="nav-link" href="login.jsp">Login</a></li>
-                        <li class="nav-item"><a class="nav-link active" href="getappoiment?actiontype=all">Manage Appointment</a></li>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">         
+                        </li>
+                        <li class="nav-item"><a class="nav-link active" href="getappoiment?actiontype=all">Manage Appointment</a></li>                  
                     </ul>
-                </div>
+                 </div>
+                <form action="home.jsp" method="post" class="ml-auto">
+                        <button type="submit" class="btn btn-outline-secondary rounded-pill">Logout</button>
+                </form>
+                <form action="myprofile.jsp" class="ml-auto">
+                    <button type="submit" class="btn btn-link rounded-circle" title="My Profile Details">
+                        <img src="image/profileicon.jpg" alt="Profile Image" class="rounded-circle" width="40" height="40">
+                    </button>
+                </form>
             </div>
+          
         </nav>
     </header>
-
+ 
   <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
@@ -126,6 +132,7 @@
             <form method="post" action="your_action_url_here">
                 <select class="form-select form-control" id="appoimentstatus" name="status">
                     <option value="Approve by No: ${sessionScope.userid} - ${sessionScope.userfullname} ">Approve by No: ${sessionScope.userid} - ${sessionScope.userfullname}</option>
+                    <option value="Decline by No: ${sessionScope.userid} - ${sessionScope.userfullname} ">Decline by No: ${sessionScope.userid} - ${sessionScope.userfullname}</option>
                 </select>
                 <input type="hidden" name="actiontype" value="edit"/>
                 <button type="submit" class="btn btn-primary mt-3">Update</button>
