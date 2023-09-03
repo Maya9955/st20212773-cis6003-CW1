@@ -53,7 +53,7 @@
                     </ul>
                 </div>
                 <form action="home.jsp" method="post" class="ml-auto">
-                        <button type="submit" class="btn btn-outline-secondary rounded-pill">Logout</button>
+                        <button type="submit" class="btn btn-outline-secondary rounded-pill" onclick="logout()">Logout</button>
                 </form>
                 <form action="myprofile.jsp" class="ml-auto">
                     <button type="submit" class="btn btn-link rounded-circle" title="My Profile Details">
@@ -150,5 +150,12 @@
         options: options,
     });
 </script>
+<script>function logout() {
+    // Clear the session storage for 'usertype'
+    sessionStorage.removeItem('usertype');
+
+    // Redirect to the home page (you can replace 'home.jsp' with your actual home page URL)
+    window.location.href = 'home.jsp';
+}</script>
 	</body>
 </html>

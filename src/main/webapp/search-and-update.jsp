@@ -47,7 +47,7 @@
                     </ul>
                  </div>
                 <form action="home.jsp" method="post" class="ml-auto">
-                        <button type="submit" class="btn btn-outline-secondary rounded-pill">Logout</button>
+                        <button type="submit" class="btn btn-outline-secondary rounded-pill" onclick="logout()">Logout</button>
                 </form>
                 <form action="myprofile.jsp" class="ml-auto">
                     <button type="submit" class="btn btn-link rounded-circle" title="My Profile Details">
@@ -73,6 +73,7 @@
                         </div>
                     </div>
                 </div>
+                  <p class="text-center mt-3">Send a email to JobSekeer to confirm appointment <a href="mailto:info@jobcounseling.com?subject=Appointment Confirmation" >Send Email</a>.</p>
                 <input type="hidden" name="actiontype" value="single"/>
             </form>
             <hr/>
@@ -140,21 +141,12 @@
         </div>
     </div>
 </div>
+<script>function logout() {
+    // Clear the session storage for 'usertype'
+    sessionStorage.removeItem('usertype');
 
-<!-- 	
- <script>
-        function setDropdownValue() {
-            const decisionDropdown = document.getElementById("decision");
-            const selectedDecision = decisionDropdown.value;
-            const userid = "${sessionScope.userid}";
-
-            // Set the value of the dropdown based on the selected decision
-            if (selectedDecision === "approve") {
-                decisionDropdown.value = userid;
-            } else if (selectedDecision === "decline") {
-                decisionDropdown.value = userid;
-            }
-        }
-    </script> -->
+    // Redirect to the home page (you can replace 'home.jsp' with your actual home page URL)
+    window.location.href = 'home.jsp';
+}</script>
 </body>
 </html>

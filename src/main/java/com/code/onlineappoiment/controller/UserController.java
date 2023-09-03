@@ -72,22 +72,22 @@ public class UserController extends HttpServlet {
 		user.setusertype(request.getParameter("usertype"));
 				
 		
-//		try {
-//			if(getUserService().addUser(user))
-//			{
-//				message = "The user has been successfully added!";
-//			}
-//			else {
-//				message = "Failed to add the user!";
-//			}
-//		} 
-//		catch (ClassNotFoundException | SQLException e) {
-//			message = "operation failed! " + e.getMessage();
-//		}
-//		
-//		request.setAttribute("feedbackMessage", message);
-//		RequestDispatcher rd = request.getRequestDispatcher("register.jsp");
-//		rd.forward(request, response);
+		try {
+			if(getUserService().addUser(user))
+			{
+				message = "The user has been successfully added!";
+			}
+			else {
+				message = "Failed to add the user!";
+			}
+		} 
+		catch (ClassNotFoundException | SQLException e) {
+			message = "operation failed! " + e.getMessage();
+		}
+		
+		request.setAttribute("feedbackMessage", message);
+		RequestDispatcher rd = request.getRequestDispatcher("register.jsp");
+		rd.forward(request, response);
 		
 		 boolean registrationSuccessful = true; 
 		    

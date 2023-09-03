@@ -29,7 +29,7 @@
         </nav>
     </header>
     
-<script>
+<%-- <script>
         function submitForm() {
             // Assuming the form fields are valid, you can replace this with your validation logic
             // ...
@@ -50,7 +50,7 @@
             return false; // Prevent the form from submitting and redirecting
         }
     </script>
-
+<p>${sessionScope.usertype}</p> --%>
 
     <div class="modal fade" id="registrationModal" tabindex="-1" aria-labelledby="registrationModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -71,7 +71,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <form action="usermanager" method="post" onsubmit="return submitForm();">
+                <form action="usermanager" method="post">
                     <div class="mb-3">
                         <label for="fullname" class="form-label">Full Name</label>
                         <input type="text" id="fullname" name="fullname" class="form-control" required>
@@ -90,11 +90,16 @@
                     </div>
                     <div class="mb-3">
                         <label for="usertype" class="form-label">User Type</label>
-                        <select id="usertype" name="usertype" class="form-select" required>
+                        <!-- <select id="usertype" name="usertype" class="form-select" required>
                             <option value="jobSeeker" selected>Job Seeker</option>
                             <option value="counselor" disabled>Counselor (Not Available)</option>
                             <option value="admin" disabled>Admin (Not Available)</option>
-                        </select>
+                        </select> -->
+                        <select id="usertype" name="usertype" class="form-select" required>
+                           <option value="jobSeeker" selected>Job Seeker</option>
+                          <option value="counselor" selected>Counselor</option>
+                          <option value="admin" selected>Admin</option>
+                      </select>
                     </div>
                     <div class="text-center">
                         <input type="hidden" name="useractiontype" value="add"/>

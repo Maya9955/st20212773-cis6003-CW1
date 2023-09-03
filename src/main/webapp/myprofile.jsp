@@ -56,12 +56,15 @@
                             <li class="nav-item"><a class="nav-link" href="add-appointment.jsp">Book Appointment</a></li>
                         <% } else if ("counselor".equals(session.getAttribute("usertype"))) { %>
                             <li class="nav-item"><a class="nav-link" href="approveappoiment.jsp">Manage Appointment</a></li>
+                            <% } else if ("admin".equals(session.getAttribute("usertype"))) { %>
+                            <li class="nav-item"><a class="nav-link" href="view-eappoiment.jsp">View Appointment</a></li>
+                             <li class="nav-item"><a class="nav-link" href="view-users.jsp">View Users</a></li>
                         <% } %>
                     </li>
                 </ul>
             </div>
             <form action="home.jsp" method="post" class="ml-auto">
-                <button type="submit" class="btn btn-outline-secondary rounded-pill">Logout</button>
+                <button type="submit" class="btn btn-outline-secondary rounded-pill"onclick="logout()">Logout</button>
             </form>
             <form action="myprofile.jsp" class="ml-auto">
                 <button type="submit" class="btn btn-link rounded-circle" title="My Profile Details">
@@ -106,8 +109,6 @@
                             <label for="password" class="form-label">Password</label>
                             <input type="password" id="password" name="password" class="form-control" value="${sessionScope.userpassword}" required>
                         </div>
-                        <input type="hidden" name="useractiontype" value="edit"/>
-                        <button type="submit" class="btn btn-primary">Update Profile</button>
                     </form>
                 </div>
             </div>
@@ -134,5 +135,12 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>function logout() {
+    // Clear the session storage for 'usertype'
+    sessionStorage.removeItem('usertype');
+
+    // Redirect to the home page (you can replace 'home.jsp' with your actual home page URL)
+    window.location.href = 'home.jsp';
+}</script>
 </body>
 </html>
