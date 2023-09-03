@@ -11,8 +11,15 @@
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Latest compiled JavaScript -->
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script>
+              function redirectToSearchAndUpdate(appointmentId) {
+              window.location.href = 'search-and-update.jsp?idappoiment=' + appointmentId;
+              }
+        </script>
 	</head>
 	<body>
+
 	 <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
@@ -34,57 +41,10 @@
         </nav>
     </header>
     
-     <script>
-    function submitForm() {
-        // Assuming the form fields are valid, you can replace this with your validation logic        
-        // Simulating registration success 
-        var deleteSuccessful = true; // Set this to true if registration is successful
-        
-        var resultMessage = deleteSuccessful
-            ? "Thank you for booking! Your appointment has been successfully booked. One of our counselors will confirm your booking by email. You can get your booking details from there."
-            : "Booking failed. Please try again.";
-        var resultColor = deleteSuccessful ? "text-success" : "text-danger";
-        
-        var resultModal = new bootstrap.Modal(document.getElementById("deleteModal"));
-        var resultModalBody = document.getElementById("deleteModalBody");
-        resultModalBody.textContent = resultMessage;
-        resultModalBody.className = resultColor;
-        
-        resultModal.show();
-        
-        // Attach the refreshPage function to the modal's "Okay" button click event
-        var okayButton = document.querySelector("#deleteModal .btn-secondary");
-        okayButton.addEventListener("click", refreshPage);
-        
-        return false; // Prevent the form from submitting and redirecting
-    }
-
-    // Function to refresh the page
-    function refreshPage() {
-        location.reload();
-    }
-</script>
-
-     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Booking Result</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" id="deleteModalBody"></div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Okay</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 		<div class="container">
-			<h2>Manage Appoitments</h2>
-			<p style='color:magenta'>${message}</p>			
+			<h2>Manage Appoitments</h2>			
 			<br/>		
-			<table class="table table-striped" onsubmit="return submitForm();">
+			<table class="table table-striped">
 				<thead>
 					<tr>
 						<th>Appoiment ID</th>
@@ -93,28 +53,33 @@
 						<th>Phone No</th>
 						<th>Date</th>
 						<th>Status</th>
+						<th>Action</th>
 					</tr>
 				</thead>			
 				<tbody>
 					<tag:forEach var="appoiment" items="${appoimentList}">
-						<tr>
-							<td>${appoiment.idappoiment}</td>
-							<td>${appoiment.name}</td>
-							<td>${appoiment.email_id}</td>
-							<td>${appoiment.ph_no}</td>
-							<td>${appoiment.date}</td>
-							<td>${appoiment.status}</td>
-							<td>
-								<%-- <form action="appoimentmanager" method="post">								
-									<input type="hidden" name="idappoiment" value="${appoiment.idappoiment}">
-									<input type="hidden" name="actiontype" value="delete">
-									<button type="submit" class="btn btn-danger">Delete the Appointment</button>
-								</form>	 --%>												
-							</td>
-						</tr>
+						<form action="appoimentmanager" method="post">
+                           <input type="hidden" name="actiontype" value="declined">
+                           <input type="hidden" name="idappoiment" value="${appoiment.idappoiment}">
+                               <tr>
+                                  <td>${appoiment.idappoiment}</td>
+                                  <td>${appoiment.name}</td>
+                                  <td>${appoiment.email_id}</td>
+                                  <td>${appoiment.ph_no}</td>
+                                  <td>${appoiment.date}</td>
+                                  <td>${appoiment.status}</td>    
+                                   <td>
+                                     <!-- Add an "Approve" button that opens "update.jsp" -->
+                                     <button type="button" class="btn btn-primary" onclick="redirectToSearchAndUpdate(${appoiment.idappoiment})">Approve</button>
+                                     
+                                   </td>  
+                               </tr>
+                        </form>
 					</tag:forEach>
 				</tbody>
 			</table>	
 		</div>
+
+
 	</body>
 </html>

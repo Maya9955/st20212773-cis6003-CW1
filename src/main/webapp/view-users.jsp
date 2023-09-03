@@ -6,13 +6,13 @@
 <html>
 	<head>
 		<meta charset="ISO-8859-1">
-		 <title>Appointment History</title>
+		 <title>User Details</title>
 		<!-- Latest compiled and minified CSS -->
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Latest compiled JavaScript -->
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 		
-		   <style>
+	 <style>
         /* CSS for the circular logo */
         .logo-circle {
             width: 100px; /* Adjust the size as needed */
@@ -34,6 +34,7 @@
 	</head>
 	
 <body>
+ <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
                 <a class="navbar-brand" href="#">Job Counseling</a>
@@ -44,8 +45,8 @@
                     <ul class="navbar-nav">
                         <li class="nav-item">         
                         </li>
-                        <li class="nav-item"><a class="nav-link active" href="getappoiment?actiontype=all">View Appointment</a></li>
-                        <li class="nav-item"><a class="nav-link active" href="view-users.jsp">View Users</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="view-appoiment.jsp">View Appointment</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="getuser?useractiontype=all">View Users</a></li>
                     </ul>
                 </div>
                 <form action="home.jsp" method="post" class="ml-auto">
@@ -61,49 +62,33 @@
     </header>
 
 
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Booking Result</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" id="deleteModalBody"></div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Okay</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 		<div class="container">
-			<h2> Appointment History</h2>		
+			<h2> User Details</h2>
+<%-- 			<p style='color:magenta'>${message}</p>	 --%>		
 			<br/>		
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th>Appointment ID</th>
+						<th>User ID</th>
 						<th>Full Name</th>
 						<th>Email</th>
-						<th>Phone No</th>
-						<th>Date</th>
-						<th>Status</th>
+						<th>Password</th>
+						<th>User Type</th>
 					</tr>
 				</thead>			
 				<tbody>
-					<tag:forEach var="appoiment" items="${appoimentList}">
+					<tag:forEach var="user" items="${userList}">
 						<tr>
-							<td>${appoiment.idappoiment}</td>
-							<td>${appoiment.name}</td>
-							<td>${appoiment.email_id}</td>
-							<td>${appoiment.ph_no}</td>
-							<td>${appoiment.date}</td>
-							<td>${appoiment.status}</td>
+							<td>${user.iduser}</td>
+							<td>${user.fullname}</td>
+							<td>${user.email}</td>
+							<td>${user.password}</td>
+							<td>${user.usertype}</td>
 							<td>
-								<form action="appoimentmanager" method="post">								
-									<input type="hidden" name="idappoiment" value="${appoiment.idappoiment}">
-									<input type="hidden" name="actiontype" value="delete">
-									<button type="submit" class="btn btn-danger">Delete the Appointment</button>
+								<form action="usermanager" method="post">								
+									<input type="hidden" name="iduser" value="${user.iduser}">
+									<input type="hidden" name="useractiontype" value="delete">
+									<button type="submit" class="btn btn-danger">Delete User</button>
 								</form>							
 							</td>
 						</tr>
@@ -111,16 +96,5 @@
 				</tbody>
 			</table>	
 		</div>
-		 <script>
-    // Function to show the feedback message in an alert when the page loads
-    function showAlertWithMessage() {
-        var feebackMessage = "${feebackMessage}";
-        
-        if (feebackMessage.trim() !== "") {
-            alert(feebackMessage);
-        }
-    }
-    window.onload = showAlertWithMessage;
-   </script>
 	</body>
 </html>

@@ -54,7 +54,17 @@ public class AppoimentManagerImpl implements AppoimentManager {
 		ps.setString(2, appoinment.getemail_id());
 		ps.setString(3, appoinment.getph_no());
 		ps.setString(4, appoinment.getdate());
-		ps.setString(5, appoinment.getstatus());
+		 ps.setString(5, appoinment.getstatus()); 
+		
+//	    // Set the status based on the provided action type
+//	    if ("approve".equals(appoinment.getstatus())) {
+//	        ps.setString(5, "approved");
+//	    } else if ("decline".equals(appoinment.getstatus())) {
+//	        ps.setString(5, "declined");
+//	    } else {
+//	        // Default status or handle other cases as needed
+//	        ps.setString(5, "pending");
+//	    }
 	
 		
 		boolean result = false;
@@ -80,6 +90,14 @@ public class AppoimentManagerImpl implements AppoimentManager {
 		ps.setString(4, appoiment.getdate());
 		ps.setString(5, appoiment.getstatus());
 		ps.setInt(6, appoiment.getidappoiment());
+		/*
+		 * if (appoiment.getstatus() != null && !appoiment.getstatus().isEmpty()) { //
+		 * Set the status based on the provided action type if
+		 * ("approve".equals(appoiment.getstatus())) { ps.setString(5, "approved"); }
+		 * else if ("decline".equals(appoiment.getstatus())) { ps.setString(5,
+		 * "declined"); } else { // Default status or handle other cases as needed
+		 * ps.setString(5, "pending"); } ps.setInt(6, appoiment.getidappoiment()); }
+		 */
 
 		
 		boolean result = false;		

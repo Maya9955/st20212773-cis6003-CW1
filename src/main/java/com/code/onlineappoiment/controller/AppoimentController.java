@@ -67,16 +67,17 @@ public class AppoimentController extends HttpServlet {
 		appoiment.setemail_id(request.getParameter("email_id"));
 		appoiment.setph_no(request.getParameter("ph_no"));
 		appoiment.setdate(request.getParameter("date"));
-		appoiment.setstatus(request.getParameter("status"));
-				
-		
+		appoiment.setstatus(request.getParameter("status")); 
+	
 		try {
 			if(getAppoimentService().addAppoiment(appoiment))
 			{
-				message = "The appoiment has been successfully booked!";
+				message = "Thank you for booking! Your appointment has been successfully booked. One of our counselors "
+						+ "will confirm your booking by email. "
+						+ "You can get your booking details from there.";
 			}
 			else {
-				message = "Failed to book the appoiment!";
+				message = "Booking failed. Please try again.";
 			}
 		} 
 		catch (ClassNotFoundException | SQLException e) {
@@ -84,7 +85,26 @@ public class AppoimentController extends HttpServlet {
 		}
 		
 		request.setAttribute("feebackMessage", message);
-		RequestDispatcher rd = request.getRequestDispatcher("add-appoiment.jsp");
+	    String userType = request.getParameter("userType");
+		
+		User user = new User();
+		
+		// Retrieve userType from the session
+	    String usertype = (String) request.getSession().getAttribute("usertype");
+
+	    // Now, you have the userType available to use in your logic
+	    System.out.println("User type: " + usertype);
+	    
+	    // Determine the JSP page based on userType
+	    String jspPage;
+	    if ("counselor".equals(usertype)) {
+	        jspPage = "approveappoiment.jsp";
+	    } else {
+	        jspPage = "add-appoiment.jsp";
+	    }
+
+		
+		RequestDispatcher rd = request.getRequestDispatcher(jspPage);
 		rd.forward(request, response);
 	}
 	
@@ -114,6 +134,21 @@ public class AppoimentController extends HttpServlet {
 		}
 		
 		request.setAttribute("feebackMessage", message);
+		
+	String userType = request.getParameter("userType");
+		
+		User user = new User();
+		
+		// Retrieve userType from the session
+	    String usertype = (String) request.getSession().getAttribute("usertype");
+//	    String userid = (String) request.getSession().getAttribute("userid");
+	    Integer userid = (Integer) request.getSession().getAttribute("userid");
+	    
+
+	    // Now, you have the userType available to use in your logic
+	    System.out.println("User type: " + usertype);
+	    System.out.println("User ID: " + userid);
+	    
 		RequestDispatcher rd = request.getRequestDispatcher("search-and-update.jsp");
 		rd.forward(request, response);
 		
@@ -136,9 +171,9 @@ public class AppoimentController extends HttpServlet {
 			message =e.getMessage();
 		}
 		
-		//request.setAttribute("feebackMessage", message);
-		//RequestDispatcher rd = request.getRequestDispatcher("view-all-and-delete-specific.jsp");
-		//rd.forward(request, response);
+		request.setAttribute("feebackMessage", message);
+		RequestDispatcher rd = request.getRequestDispatcher("view-appoiment.jsp");
+		rd.forward(request, response);
 		
 		HttpSession session = request.getSession();
 		session.setAttribute("message", message);
@@ -165,6 +200,22 @@ public class AppoimentController extends HttpServlet {
 			message = e.getMessage();
 		}
 		request.setAttribute("feebackMessage", message);
+		
+	String userType = request.getParameter("userType");
+		
+		User user = new User();
+		
+		// Retrieve userType from the session
+	    String usertype = (String) request.getSession().getAttribute("usertype");
+	    String userfullname = (String) request.getSession().getAttribute("userfullname");;
+	    Integer userid = (Integer) request.getSession().getAttribute("userid");
+	    
+
+	    // from here we can print, you can check from console
+	    System.out.println("User type: " + usertype);
+	    System.out.println("User ID: " + userid);
+	    System.out.println("User Name: " + userfullname);
+
 		RequestDispatcher rd = request.getRequestDispatcher("search-and-update.jsp");
 		rd.forward(request, response);
 	}
@@ -174,6 +225,7 @@ public class AppoimentController extends HttpServlet {
 		clearMessage();
 		
 		List<Appoiment> appoimentList = new ArrayList<Appoiment>();
+		    
 		try {
 			appoimentList = getAppoimentService().fetchAllAppoiment();
 			
@@ -188,25 +240,29 @@ public class AppoimentController extends HttpServlet {
 		request.setAttribute("appoimentList", appoimentList);
 		request.setAttribute("feebackMessage", message);
 		
+		
 		String userType = request.getParameter("userType");
 		
 		User user = new User();
 		
 		// Retrieve userType from the session
 	    String usertype = (String) request.getSession().getAttribute("usertype");
+//	    String userid = (String) request.getSession().getAttribute("userid");
+	    Integer userid = (Integer) request.getSession().getAttribute("userid");
+	    
 
 	    // Now, you have the userType available to use in your logic
 	    System.out.println("User type: " + usertype);
+	    System.out.println("User ID: " + userid);
 	    
 	    // Determine the JSP page based on userType
 	    String jspPage;
 	    if ("counselor".equals(usertype)) {
-	        jspPage = "approveappoiment.jsp";
+	        jspPage = "approveappoiment.jsp" ;
 	    } else if ("admin".equals(usertype)) {
 	        jspPage = "view-appoiment.jsp";
 	    } else {
-	        // Handle other user types or set a default JSP page
-	        jspPage = "default.jsp";
+	        jspPage = "add-appoiment.jsp";
 	    }
 
 	    RequestDispatcher rd = request.getRequestDispatcher(jspPage);

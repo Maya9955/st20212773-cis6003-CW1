@@ -25,7 +25,25 @@
             text-align: center;
             padding: 2rem;
         }
+        /* CSS for the circular logo */
+        .logo-circle {
+            width: 100px; /* Adjust the size as needed */
+            height: 100px; /* Adjust the size as needed */
+            background-color: #007bff; /* Background color of the circle */
+            border-radius: 50%; /* Creates a circular shape */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+            margin-top: 20px; /* Adjust the margin-top as needed */
+        }
+
+        .logo img {
+            width: 60px; /* Adjust the size of the logo image as needed */
+            height: 60px; /* Adjust the size of the logo image as needed */
+        }
     </style>
+
 </head>
 <body>
     <header>
@@ -36,71 +54,32 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item"><a class="nav-link" href="home.jsp">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Book Appointment</a></li>
-                        <li class="nav-item"><a class="nav-link" href="myprofile.jsp">My Profile</a></li>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">         
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="#">Book Appointment</a></li>                       
                     </ul>
-                </div>
+                 </div>
+                <form action="home.jsp" method="post" class="ml-auto">
+                        <button type="submit" class="btn btn-outline-secondary rounded-pill">Logout</button>
+                </form>
+                <form action="myprofile.jsp" class="ml-auto">
+                    <button type="submit" class="btn btn-link rounded-circle" title="My Profile Details">
+                        <img src="image/profileicon.jpg" alt="Profile Image" class="rounded-circle" width="40" height="40">
+                    </button>
+                </form>
             </div>
+          
         </nav>
-    </header>
-    
- <script>
-    function submitForm() {
-        // Assuming the form fields are valid, you can replace this with your validation logic
-        // ...
-        
-        // Simulating registration success (you can replace this with your actual server-side logic)
-        var bookingSuccessful = true; // Set this to true if registration is successful
-        
-        var resultMessage = bookingSuccessful
-            ? "Thank you for booking! Your appointment has been successfully booked. One of our counselors will confirm your booking by email. You can get your booking details from there."
-            : "Booking failed. Please try again.";
-        var resultColor = bookingSuccessful ? "text-success" : "text-danger";
-        
-        var resultModal = new bootstrap.Modal(document.getElementById("registrationModal"));
-        var resultModalBody = document.getElementById("registrationModalBody");
-        resultModalBody.textContent = resultMessage;
-        resultModalBody.className = resultColor;
-        
-        resultModal.show();
-        
-        // Attach the refreshPage function to the modal's "Okay" button click event
-        var okayButton = document.querySelector("#registrationModal .btn-secondary");
-        okayButton.addEventListener("click", refreshPage);
-        
-        return false; // Prevent the form from submitting and redirecting
-    }
-
-    // Function to refresh the page
-    function refreshPage() {
-        location.reload();
-    }
-</script>
-
-
-     <div class="modal fade" id="registrationModal" tabindex="-1" aria-labelledby="registrationModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="registrationModalLabel">Booking Result</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" id="registrationModalBody"></div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Okay</button>
-            </div>
-        </div>
-    </div>
-</div>
+    </header>    
     
     <div class="container">
         <div class="row">
             <div class="col-lg-6">
                 <div class="appointment-form">
                     <h2 class="mb-4">Book an Appointment</h2>
-                    <form action="appoimentmanager" method="post" onsubmit="return submitForm();">
+                    <%-- <p>${feebackMessage}</p> --%>
+                    <form action="appoimentmanager" method="post" >
                         <div class="mb-3">
                             <label for="Name" class="form-label">Full Name</label>
                             <input type="text" id="name" name="name" class="form-control" required>
@@ -158,5 +137,18 @@
         </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+   <script>
+    // Function to show the feedback message in an alert when the page loads
+    function showAlertWithMessage() {
+        var feebackMessage = "${feebackMessage}";
+        
+        if (feebackMessage.trim() !== "") {
+            alert(feebackMessage);
+        }
+    }
+    window.onload = showAlertWithMessage;
+   </script>
+    
 </body>
 </html>

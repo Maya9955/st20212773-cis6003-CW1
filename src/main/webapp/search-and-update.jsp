@@ -1,5 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" isELIgnored="false"%>
+    
+<%
+  String appointmentIdParam = request.getParameter("idappoiment");
+  int appointmentId = 0; // Initialize to a default value
+  if (appointmentIdParam != null) {
+    try {
+      appointmentId = Integer.parseInt(appointmentIdParam);
+    } catch (NumberFormatException e) {
+      // Handle parsing error if necessary
+    }
+  }
+  // Now, you have the appointmentId available for use in your JSP page
+%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -9,56 +22,132 @@
 		<!-- Latest compiled and minified CSS -->
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 		<!-- Latest compiled JavaScript -->
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>	
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+		<style>
+    body {
+        font-family: 'Open Sans', sans-serif;
+    }
+</style>	
 	</head>
 	<body>
-		<div class="container">
-			<ul class="nav nav-tabs">
-			  <li class="nav-item">
-			    <a class="nav-link" aria-current="page" href="add-appoiment.jsp">Book Appoiment</a>
-			  </li>
-			  <li class="nav-item">
-			    <a class="nav-link active" href="#">Search & Update the Appoiment</a>
-			  </li>
-			  <li class="nav-item">
-			    <a class="nav-link" href="getappoiment?actiontype=all">View All & Delete Specific</a>
-			  </li>
-			</ul>			
-			<br/>
-			<h2>Search & update the appoiment</h2>
-			<p style='color:magenta'>${feebackMessage}</p>
-			<br/>
-			<form action="getappoiment">			
-				<label for="idappoiment">Enter Appoiment ID:</label>
-				<input class="form-control" type="number" id="idappoiment" name="idappoiment" placeholder="Type the appoiment id"/>
-				<input type="hidden" name="actiontype" value="single"/>
-				<br/>
-				<button type="submit" class="btn btn-info">Search</button>			
-			</form>
-			<hr/>
-			
-			<form action="appoimentmanager" method="post">			
-				<label for="idappoimentUpdate">Appoiment ID:</label>
-				<input class="form-control" type="number" id="idappoimentUpdate" name="idappoiment" readonly="readonly" value="${appoiment.idappoiment}"/>
-				
-				<label for="appoimentName">Name:</label>
-				<input class="form-control" type="text" id="appoimentName" name="name" value="${appoiment.getName()}"/>
-				
-				<label for="appoimentEmail_id">Email ID:</label>
-				<input class="form-control" type="text" id="appoimentEmail_id" name="email_id" value="${appoiment.getemail_id()}"/>
-				
-				<label for="appoimentPhone_no">Phone Number:</label>
-				<input class="form-control" type="text" id="appoimentPhone_no" name="ph_no" value="${appoiment.getph_no()}"/>
-				
-				<label for="appoimentdate">Date:</label>
-				<input class="form-control" type="date" id="appoimentdate" name="date" value="${appoiment.getdate()}"/>
-				
-				
-				<input type="hidden" name="actiontype" value="edit"/>
-				<br/>
-				<button type="submit" class="btn btn-warning">Update the Appoiment</button>			
-			</form>
-					
-		</div>	
-	</body>
+<%-- 	<p>${sessionScope.userid}</p> --%>
+		  <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="#">Job Counseling</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#freelancers">Careers</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                        <li class="nav-item"><a class="nav-link" href="login.jsp">Login</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="getappoiment?actiontype=all">Manage Appointment</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+  <div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="mt-5 text-center">Enter the Appointment ID to Approve</h2>
+            <form action="getappoiment" class="mt-3">
+                <div class="form-group">
+                    <label for="idappoiment">Enter Appointment ID:</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" id="idappoiment" name="idappoiment" value="<%= appointmentId %>"/>
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="actiontype" value="single"/>
+            </form>
+            <hr/>
+        </div>
+    </div>
+
+   <div class="row mt-4">
+    <div class="col-md-4">
+        <form action="appoimentmanager" method="post">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Appointment ID</h5>
+                    <input type="number" class="form-control" id="idappoimentUpdate" name="idappoiment" readonly="readonly" value="${appoiment.idappoiment}">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Name</h5>
+                    <input type="text" class="form-control" id="appoimentName" name="name" value="${appoiment.getName()}" readonly="readonly" >
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Email ID</h5>
+                    <input type="text" class="form-control" id="appoimentEmail_id" name="email_id" value="${appoiment.getemail_id()}" readonly="readonly">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Next row with three cards -->
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Phone Number</h5>
+                    <input type="text" class="form-control" id="appoimentPhone_no" name="ph_no" value="${appoiment.getph_no()}"  readonly="readonly">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Date</h5>
+                    <input type="date" class="form-control" id="appoimentdate" name="date" value="${appoiment.getdate()}" readonly="readonly">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+    <div class="card bg-success"> <!-- Green background for status -->
+        <div class="card-body">
+            <h5 class="card-title">Status</h5>
+            <form method="post" action="your_action_url_here">
+                <select class="form-select form-control" id="appoimentstatus" name="status">
+                    <option value="Approve by No: ${sessionScope.userid} - ${sessionScope.userfullname} ">Approve by No: ${sessionScope.userid} - ${sessionScope.userfullname}</option>
+                </select>
+                <input type="hidden" name="actiontype" value="edit"/>
+                <button type="submit" class="btn btn-primary mt-3">Update</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- 	
+ <script>
+        function setDropdownValue() {
+            const decisionDropdown = document.getElementById("decision");
+            const selectedDecision = decisionDropdown.value;
+            const userid = "${sessionScope.userid}";
+
+            // Set the value of the dropdown based on the selected decision
+            if (selectedDecision === "approve") {
+                decisionDropdown.value = userid;
+            } else if (selectedDecision === "decline") {
+                decisionDropdown.value = userid;
+            }
+        }
+    </script> -->
+</body>
 </html>

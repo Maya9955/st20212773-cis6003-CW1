@@ -40,9 +40,9 @@ public class UserController extends HttpServlet {
 		else if  (useractionType.equals("login")) {
 			checkUserLogin(request, response);
 		}
-//		else {
-//			fetchLoggedInUserDetails(request, response);
-//		}
+		else {
+		fetchAllUser(request, response);
+	}
 		
 	}
 	
@@ -134,7 +134,7 @@ public class UserController extends HttpServlet {
 		
 		try {
 			if(getUserService().deleteUser(iduser)) {
-				message = "The product has been successfully deleted. Product Code: " + iduser;
+				message = "The user has been successfully deleted. User ID: " + iduser;
 			}
 			else {
 				message = "Failed to delet the product! Product Code: " + iduser;
@@ -147,7 +147,7 @@ public class UserController extends HttpServlet {
 		HttpSession session = request.getSession();
 		session.setAttribute("message", message);
 		
-		response.sendRedirect("getuser?actiontype=all");
+		response.sendRedirect("getuser?useractiontype=all");
 	}
 	
 	private void fetchSingleUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -192,7 +192,17 @@ public class UserController extends HttpServlet {
 		request.setAttribute("userList", userList);
 		request.setAttribute("feebackMessage", message);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("view-all-and-delete-specific.jsp");
+		String userType = request.getParameter("userType");
+		
+		User user = new User();
+		
+		// Retrieve userType from the session
+	    String usertype = (String) request.getSession().getAttribute("usertype");
+
+	    // Now, you have the userType available to use in your logic
+	    System.out.println("User type: " + usertype);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("view-users.jsp");
 		rd.forward(request, response);
 		
 	}
@@ -233,7 +243,7 @@ public class UserController extends HttpServlet {
 	                        response.sendRedirect("view-appoiment.jsp");
 	                    } else if ("jobSeeker".equals(userType)) {
 	                        // Redirect job seeker to register.jsp
-	                        response.sendRedirect("register.jsp");
+	                        response.sendRedirect("add-appoiment.jsp");
 	                    } else if ("counselor".equals(userType)){
 	                    	response.sendRedirect("approveappoiment.jsp");
 	                    }
