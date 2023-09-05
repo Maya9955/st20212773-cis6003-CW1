@@ -11,7 +11,6 @@
       // Handle parsing error if necessary
     }
   }
-  // Now, you have the appointmentId available for use in your JSP page
 %>
 <!DOCTYPE html>
 <html>
@@ -73,7 +72,10 @@
                         </div>
                     </div>
                 </div>
-                  <p class="text-center mt-3">Send a email to JobSekeer to confirm appointment <a href="mailto:info@jobcounseling.com?subject=Appointment Confirmation" >Send Email</a>.</p>
+                  <p class="text-center mt-3">Send a email to JobSekeer to confirm appointment <a href="mailto:${appoiment.getemail_id()}?subject=Appointment Confirmation">Send Email</a>
+				. </p>
+				<p class="text-center mt-3" style="font-weight:bold">Before send email or update status click the <span style="font-weight: bold; background-color: yellow;">search button</span>.</p>
+
                 <input type="hidden" name="actiontype" value="single"/>
             </form>
             <hr/>

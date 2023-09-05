@@ -98,34 +98,33 @@ public class UserController extends HttpServlet {
 		    }
 	}
 	
-	private void editUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		clearMessage();
-		
-		User user = new User();
-		user.setiduser(Integer.parseInt(request.getParameter("iduser")));
-		user.setfullname(request.getParameter("fullname"));
-		user.setemail(request.getParameter("email"));
-		user.setpassword(request.getParameter("password"));
-		user.setusertype(request.getParameter("usertype"));
-		
-		try {
-			if(getUserService().editUser(user)) {
-				message = "The appoiment has been successfully updated! Appoiment ID: " + user.getiduser();
-			}
-			else {
-				message = "Failed to update the appoiment! Appoiment ID: " + user.getiduser();
-			}
-		} 
-		catch (ClassNotFoundException | SQLException e) {
-			message = e.getMessage();
-		}
-		
-		request.setAttribute("feebackMessage", message);
-		RequestDispatcher rd = request.getRequestDispatcher("myprofile.jsp");
-		rd.forward(request, response);
-		
-	}
+
+	
+	 private void editUser(HttpServletRequest request, HttpServletResponse
+	  response) throws ServletException, IOException {
+	  
+	  clearMessage();
+	  
+	  User user = new User();
+	  
+	  System.out.println("iduser" + request.getSession().getId());
+	  user.setiduser(Integer.parseInt(request.getSession().getId()));
+	  user.setfullname(request.getParameter("fullname"));
+	  user.setemail(request.getParameter("email"));
+	  user.setpassword(request.getParameter("password"));
+	  user.setusertype(request.getParameter("usertype"));
+	  
+	  try { if(getUserService().editUser(user)) { message =
+	  "The appoiment has been successfully updated! Appoiment ID: " +
+	  user.getiduser(); } else { message =
+	  "Failed to update the appoiment! Appoiment ID: " + user.getiduser(); } }
+	  catch (ClassNotFoundException | SQLException e) { message = e.getMessage(); }
+	  
+	  request.setAttribute("feebackMessage", message); RequestDispatcher rd =
+	  request.getRequestDispatcher("myprofile.jsp"); rd.forward(request, response);
+	  
+	  }
+	
 	
 	private void deleteUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -263,12 +262,12 @@ public class UserController extends HttpServlet {
 	                			session.setAttribute("useremail", user.getemail());
 	                    if ("admin".equals(userType)) {
 	                        // Redirect admin to home.jsp
-	                        response.sendRedirect("view-appoiment.jsp");
+	                        response.sendRedirect("getappoiment?actiontype=all");
 	                    } else if ("jobSeeker".equals(userType)) {
 	                        // Redirect job seeker to register.jsp
 	                        response.sendRedirect("add-appoiment.jsp");
 	                    } else if ("counselor".equals(userType)){
-	                    	response.sendRedirect("approveappoiment.jsp");
+	                    	response.sendRedirect("getappoiment?actiontype=all");
 	                    }
 	                } else {
 //	                    String message = "Login failed. Please try again.";

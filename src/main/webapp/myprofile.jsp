@@ -109,6 +109,10 @@
                             <label for="password" class="form-label">Password</label>
                             <input type="password" id="password" name="password" class="form-control" value="${sessionScope.userpassword}" required>
                         </div>
+                         <!-- <div class="text-center">
+                        <input type="hidden" name="useractiontype" value="edit"/>
+			            <button type="submit" class="btn btn-primary">Update the Profile</button>
+			            </div> -->
                     </form>
                 </div>
             </div>

@@ -66,8 +66,8 @@ public class UserManagerImpl implements UserManager {
 		ps.setString(2, user.getemail());
 		ps.setString(3, user.getpassword());
 		ps.setString(4, user.getusertype());
-		ps.setInt(5, user.getiduser());
-
+		/* ps.setInt(5, user.getiduser()); */
+		
 		
 		boolean result = false;		
 		if(ps.executeUpdate() > 0)

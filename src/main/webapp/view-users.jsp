@@ -48,7 +48,7 @@
                     <ul class="navbar-nav">
                         <li class="nav-item">         
                         </li>
-                        <li class="nav-item"><a class="nav-link active" href="view-appoiment.jsp">View Appointment</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="getappoiment?actiontype=all">View Appointment</a></li>
                         <li class="nav-item"><a class="nav-link active" href="getuser?useractiontype=all">View Users</a></li>
                     </ul>
                 </div>
@@ -71,24 +71,6 @@
         <div class="text-center">
             <canvas id="userCountsChart" width="600" height="100"></canvas>
         </div>
-
-
-<%-- 		<div class="container">
-			<h2> User Details</h2>
-			<p style='color:magenta'>${message}</p>		
-                <p>Job Seeker Count: ${jobSeekerCount}</p>
-                <p>Counselor Count: ${counselorCount}</p>
-			<br/>	 --%>	
-<%-- 			 <div class="row">
-            <div class="col-md-6">
-                <h3>Job Seeker Count</h3>
-                <p>${jobSeekerCount}</p>
-            </div>
-            <div class="col-md-6">
-                <h3>Counselor Count</h3>
-                <p>${counselorCount}</p>
-            </div>
-        </div> --%>
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -134,7 +116,7 @@
         }],
     };
 
-    // Define chart options (you can customize this as needed)
+    // Define chart options
     var options = {
         scales: {
             y: {
@@ -154,7 +136,7 @@
     // Clear the session storage for 'usertype'
     sessionStorage.removeItem('usertype');
 
-    // Redirect to the home page (you can replace 'home.jsp' with your actual home page URL)
+    // Redirect to the home page 
     window.location.href = 'home.jsp';
 }</script>
 	</body>

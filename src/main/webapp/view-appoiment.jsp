@@ -14,7 +14,6 @@
 		<!-- Latest compiled JavaScript -->
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
-		
 		   <style>
         /* CSS for the circular logo */
         .logo-circle {
@@ -37,6 +36,8 @@
 	</head>
 	
 <body>
+
+
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
                 <a class="navbar-brand" href="#">Job Counseling</a>
@@ -48,7 +49,7 @@
                         <li class="nav-item">         
                         </li>
                         <li class="nav-item"><a class="nav-link active" href="getappoiment?actiontype=all">View Appointment</a></li>
-                        <li class="nav-item"><a class="nav-link active" href="view-users.jsp">View Users</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="getuser?useractiontype=all">View Users</a></li>
                         <li class="nav-item"><a class="nav-link active" href="register.jsp">Add Users</a></li>
                     </ul>
                 </div>
@@ -77,12 +78,27 @@
         </div>
     </div>
 </div>
-
- <!-- Display the counts as a graph -->
+<%--  <div class="text-center">
+            <canvas id="totalCountsChart" width="600" height="100"></canvas>
+        </div>
+       
         <div class="text-center">
         <h2>Appointment Status Report- Counselor wise</h2>
             <canvas id="userCountsChart" width="700" height="100"></canvas>
+        </div>  --%>
+       <div class="container">
+    <div class="row">
+        <div class="col-md-6 text-center">
+        <h2>Appointment Status Report- Counselor wise</h2>
+            <canvas id="totalCountsChart" width="600" height="250"></canvas>
         </div>
+        <div class="col-md-6 text-center">
+            <h2>Appointment Status Report- Counselor wise</h2>
+            <canvas id="userCountsChart" width="700" height="300"></canvas>
+        </div>
+    </div>
+</div> 
+        
 			<h2> Appointment History</h2>
 			<table class="table table-striped">
 				<thead>
@@ -116,6 +132,7 @@
 				</tbody>
 			</table>	
 		</div>
+		
 		 <script>
     // Function to show the feedback message in an alert when the page loads
     function showAlertWithMessage() {
@@ -127,7 +144,7 @@
     }
     window.onload = showAlertWithMessage;
    </script>
-   <!-- ... (your existing HTML code) ... -->
+
 <!-- Add a canvas element to display the chart -->
 <canvas id="userCountsChart"></canvas>
 
@@ -185,8 +202,38 @@
     // Redirect to the home page (you can replace 'home.jsp' with your actual home page URL)
     window.location.href = 'home.jsp';
 }</script>
+		<script>
+    // Get the canvas element and context
+    var canvas = document.getElementById("totalCountsChart");
+    var ctx = canvas.getContext("2d");
+
+    // Define chart data
+    var data = {
+        labels: ["Approved", "Declined"],
+        datasets: [{
+            label: "User Counts",
+            backgroundColor: ["green", "red"], // Colors for bars
+            data: [${totalApprovedCount}, ${totalDeclinedCount}],
+        }],
+    };
+
+    // Define chart options (you can customize this as needed)
+    var options = {
+        scales: {
+            y: {
+                beginAtZero: true,
+            },
+        },
+    };
+
+    // Create the chart
+    var userCountsChart = new Chart(ctx, {
+        type: "bar",
+        data: data,
+        options: options,
+    });
+</script>
+
 </body>
 </html>
    
-	</body>
-</html>
